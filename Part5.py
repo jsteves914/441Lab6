@@ -1,17 +1,17 @@
-# Part5.py
 import time, random, threading
 from Part3 import Shifter
 
 class Bug:
-    def __init__(self, timestep=0.1, x=3, isWrapOn=False):
+    def __init__(self, timestep=0.1, x=3, isWrapOn=False, serial=None, clock=None, latch=None):
         self.timestep = float(timestep)
         self.x = int(x)
         self.isWrapOn = bool(isWrapOn)
-
-        serial = int(input("Enter the serial/data pin (BCM): "))
-        clock = int(input("Enter the clock pin (BCM): "))
-        latch = int(input("Enter the latch pin (BCM): "))
-
+        if serial is None:
+            serial = int(input("Enter the serial/data pin (BCM): "))
+        if clock is None:
+            clock = int(input("Enter the clock pin (BCM): "))
+        if latch is None:
+            latch = int(input("Enter the latch pin (BCM): "))
         self.__shifter = Shifter(serial, clock, latch)
         self.__running = False
         self.__thread = None
@@ -31,7 +31,6 @@ class Bug:
         if self.__running:
             return
         self.__running = True
-
         def loop():
             try:
                 while self.__running:
@@ -40,7 +39,6 @@ class Bug:
                     self.__step_once()
             finally:
                 self.__shifter.shiftByte(0)
-
         self.__thread = threading.Thread(target=loop, daemon=True)
         self.__thread.start()
 
