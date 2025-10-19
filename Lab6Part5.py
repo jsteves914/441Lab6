@@ -1,5 +1,5 @@
 import time, random, threading
-from Part3 import Shifter
+from Lab6Part3 import Shifter
 
 class Bug:
     def __init__(self, timestep=0.1, x=3, isWrapOn=False, serial=None, clock=None, latch=None):
