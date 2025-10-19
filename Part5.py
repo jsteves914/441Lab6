@@ -3,15 +3,11 @@ from Part3 import Shifter
 
 class Bug:
     def __init__(self, timestep=0.1, x=3, isWrapOn=False, serial=None, clock=None, latch=None):
+        if serial is None or clock is None or latch is None:
+            raise ValueError("Provide serial, clock, and latch pins")
         self.timestep = float(timestep)
         self.x = int(x)
         self.isWrapOn = bool(isWrapOn)
-        if serial is None:
-            serial = int(input("Enter the serial/data pin (BCM): "))
-        if clock is None:
-            clock = int(input("Enter the clock pin (BCM): "))
-        if latch is None:
-            latch = int(input("Enter the latch pin (BCM): "))
         self.__shifter = Shifter(serial, clock, latch)
         self.__running = False
         self.__thread = None
