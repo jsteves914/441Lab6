@@ -21,22 +21,19 @@ class Shifter:
         value &= 0xFF
         GPIO.output(self.latchPin, GPIO.LOW)
         for i in range(8):
-            bit = (value >> i) & 1
-            GPIO.output(self.serialPin, bit)
+            GPIO.output(self.serialPin, (value >> i) & 1)
             self._ping(self.clockPin)
         self._ping(self.latchPin)
 
     def cleanup(self):
         GPIO.cleanup()
 
-
-serial = int(input("Enter the serial/data pin (BCM): "))
-clock = int(input("Enter the clock pin (BCM): "))
-latch = int(input("Enter the latch pin (BCM): "))
-
-s = Shifter(serial, clock, latch)
-pattern = 0b01100110
-s.shiftByte(pattern)
-
-input("Press Enter to exit...")
-s.cleanup()
+if __name__ == "__main__":
+    serial = int(input("Enter the serial/data pin (BCM): "))
+    clock = int(input("Enter the clock pin (BCM): "))
+    latch = int(input("Enter the latch pin (BCM): "))
+    s = Shifter(serial, clock, latch)
+    pattern = 0b01100110
+    s.shiftByte(pattern)
+    input("Press Enter to exit...")
+    s.cleanup()
