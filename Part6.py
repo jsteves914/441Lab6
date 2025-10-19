@@ -1,3 +1,4 @@
+#bug.py
 import time
 import RPi.GPIO as GPIO
 from Part5 import Bug
