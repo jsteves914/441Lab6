@@ -34,13 +34,12 @@ class Bug:
                     time.sleep(self.timestep)
                     self.__step_once()
             finally:
+                # leave GPIO configured; just blank the LEDs
                 self.__shifter.shiftByte(0)
         self.__thread = threading.Thread(target=loop, daemon=True)
         self.__thread.start()
 
     def stop(self):
-        self.__running = False
-        if self.__thread:
-            self.__thread.join()
-        self.__shifter.shiftByte(0)
-        self.__shifter.cleanup()
+        if not self.__running:
+            self.__shifter.shiftByte(0)
+            return
