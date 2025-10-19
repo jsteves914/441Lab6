@@ -41,3 +41,4 @@ except KeyboardInterrupt:
 finally:
     b.stop()
     GPIO.cleanup()
+
