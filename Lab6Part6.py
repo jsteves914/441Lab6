@@ -1,7 +1,7 @@
 #bug.py
 import time
 import RPi.GPIO as GPIO
-from Part5 import Bug
+from Lab6Part5 import Bug
 
 GPIO.setmode(GPIO.BCM)
 
