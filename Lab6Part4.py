@@ -1,5 +1,5 @@
 import time, random
-from Part3 import Shifter
+from Lab6Part3 import Shifter
 
 serial = int(input("Enter the serial/data pin (BCM): "))
 clock = int(input("Enter the clock pin (BCM): "))
