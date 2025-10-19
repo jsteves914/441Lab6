@@ -28,3 +28,15 @@ class Shifter:
 
     def cleanup(self):
         GPIO.cleanup()
+
+
+serial = int(input("Enter the serial/data pin (BCM): "))
+clock = int(input("Enter the clock pin (BCM): "))
+latch = int(input("Enter the latch pin (BCM): "))
+
+s = Shifter(serial, clock, latch)
+pattern = 0b01100110
+s.shiftByte(pattern)
+
+input("Press Enter to exit...")
+s.cleanup()
