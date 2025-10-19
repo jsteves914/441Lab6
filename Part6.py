@@ -19,27 +19,33 @@ latch  = int(input("Enter the latch pin (BCM): "))
 b = Bug(serial=serial, clock=clock, latch=latch)
 base_dt = b.timestep
 prev_s2 = GPIO.input(s2)
+last_change = 0.0
+DEBOUNCE = 0.03
 
 try:
     while True:
+        now = time.time()
         s1v = GPIO.input(s1)
         s2v = GPIO.input(s2)
         s3v = GPIO.input(s3)
 
+  
         if s1v:
             b.start()
         else:
-            b.stop()   
+            b.stop()            
 
-        if s2v != prev_s2:
+     
+        if s2v != prev_s2 and (now - last_change) > DEBOUNCE:
             b.isWrapOn = not b.isWrapOn
             prev_s2 = s2v
+            last_change = now
 
+    
         b.timestep = max(0.001, base_dt / 3.0) if s3v else base_dt
-        time.sleep(0.02)
 
+        time.sleep(0.01)
 except KeyboardInterrupt:
     pass
 finally:
     b.close()
-    
