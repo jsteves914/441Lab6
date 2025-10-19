@@ -1,5 +1,5 @@
 import time, random
-from shifter import Shifter
+from Part3 import Shifter
 
 serial = int(input("Enter the serial/data pin (BCM): "))
 clock = int(input("Enter the clock pin (BCM): "))
@@ -14,7 +14,7 @@ try:
     while True:
         s.shiftByte(1 << pos)
         time.sleep(dt)
-        step = -1 if random.random() < 0.5 else 1
+        step = random.choice([-1, 1])
         if pos == 0 and step == -1:
             step = 1
         elif pos == 7 and step == 1:
@@ -22,3 +22,4 @@ try:
         pos += step
 finally:
     s.cleanup()
+
